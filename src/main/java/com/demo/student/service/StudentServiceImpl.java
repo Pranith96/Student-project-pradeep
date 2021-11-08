@@ -63,4 +63,24 @@ public class StudentServiceImpl implements StudentService {
 		return response.get();
 	}
 
+	@Override
+	public List<Student> getStudentDetailsByNameParam(String studentName) throws Exception {
+
+		List<Student> response = studentRepository.fetchStudentName(studentName);
+
+		if (null == response || response.isEmpty()) {
+			throw new Exception("data is empty");
+		}
+		return response;
+	}
+
+	@Override
+	public String deleteData(Integer studentId) throws Exception {
+		Optional<Student> response = studentRepository.findById(studentId);
+		if (!response.isPresent()) {
+			throw new Exception("Student data not found for current Id");
+		}
+		studentRepository.deleteById(studentId);
+		return "Deleted succesfully";
+	}
 }

@@ -16,4 +16,8 @@ public interface StudentService {
 
 	Student getLoginDetails(String loginId, String password) throws Exception;
 
+	List<Student> getStudentDetailsByNameParam(String studentName) throws Exception;
+
+	String deleteData(Integer studentId) throws Exception;
+
 }

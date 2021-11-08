@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.student.entity.Student;
@@ -52,6 +54,20 @@ public class StudentController {
 			@PathVariable("password") String password) throws Exception {
 		Student response = studentService.getLoginDetails(loginId, password);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+
+	@GetMapping("/get")
+	public ResponseEntity<List<Student>> getStudentDetailsByNameParam(@RequestParam("studentName") String studentName)
+			throws Exception {
+		List<Student> response = studentService.getStudentDetailsByNameParam(studentName);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+
+	@DeleteMapping("/delete/{studentId}")
+	public ResponseEntity<String> deleteStudentDetails(@PathVariable("studentId") Integer studentId) throws Exception {
+		String response = studentService.deleteData(studentId);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 
 	}
+
 }
