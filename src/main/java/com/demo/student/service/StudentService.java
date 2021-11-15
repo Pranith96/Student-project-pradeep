@@ -20,4 +20,8 @@ public interface StudentService {
 
 	String deleteData(Integer studentId) throws Exception;
 
+	String updateStudent(Student student) throws Exception;
+
+	String updateStudentName(Integer studentId, String studentName);
+
 }

@@ -83,4 +83,37 @@ public class StudentServiceImpl implements StudentService {
 		studentRepository.deleteById(studentId);
 		return "Deleted succesfully";
 	}
+
+	@Override
+	public String updateStudent(Student student) throws Exception {
+		Optional<Student> response = studentRepository.findById(student.getStudentId());
+		if (!response.isPresent()) {
+			throw new Exception("Student record not exists for update");
+		}
+
+		if (student.getStudentName() != null) {
+			response.get().setStudentName(student.getStudentName());
+		}
+		if (student.getAddress() != null) {
+			response.get().setAddress(student.getAddress());
+		}
+		if (student.getLoginId() != null) {
+			response.get().setLoginId(student.getLoginId());
+		}
+		if (student.getPassword() != null) {
+			response.get().setPassword(student.getPassword());
+		}
+		if (student.getMobileNumber() != null) {
+			response.get().setMobileNumber(student.getMobileNumber());
+		}
+
+		studentRepository.save(response.get());
+		return "Data updated successfully";
+	}
+
+	@Override
+	public String updateStudentName(Integer studentId, String studentName) {
+		studentRepository.updateStudentName(studentId,studentName);
+		return "updated Name succesfully";
+	}
 }
