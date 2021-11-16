@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.student.entity.Student;
+import com.demo.student.exception.StudentNoContentException;
+import com.demo.student.exception.StudentNotFoundException;
 import com.demo.student.repository.StudentRepository;
 
 @Service
@@ -26,30 +28,30 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<Student> getAllStudent() throws Exception {
+	public List<Student> getAllStudent() throws StudentNoContentException {
 		List<Student> response = studentRepository.findAll();
 		if (null == response || response.isEmpty()) {
-			throw new Exception("data is empty");
+			throw new StudentNoContentException("data is empty");
 		}
 		return response;
 	}
 
 	@Override
-	public Student getStudent(Integer studentId) throws Exception {
+	public Student getStudent(Integer studentId) throws StudentNotFoundException {
 		Optional<Student> response = studentRepository.findById(studentId);
 		if (!response.isPresent()) {
-			throw new Exception("Student data not found for current Id");
+			throw new StudentNotFoundException("Student data not found for current Id");
 		}
 		return response.get();
 	}
 
 	@Override
-	public List<Student> getStudentbyName(String studentName) throws Exception {
+	public List<Student> getStudentbyName(String studentName) throws StudentNoContentException {
 
 		List<Student> response = studentRepository.findByStudentName(studentName);
 
 		if (null == response || response.isEmpty()) {
-			throw new Exception("data is empty");
+			throw new StudentNoContentException("data is empty for student record");
 		}
 		return response;
 	}
@@ -64,31 +66,31 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<Student> getStudentDetailsByNameParam(String studentName) throws Exception {
+	public List<Student> getStudentDetailsByNameParam(String studentName) throws StudentNoContentException {
 
 		List<Student> response = studentRepository.fetchStudentName(studentName);
 
 		if (null == response || response.isEmpty()) {
-			throw new Exception("data is empty");
+			throw new StudentNoContentException("data is empty for student record");
 		}
 		return response;
 	}
 
 	@Override
-	public String deleteData(Integer studentId) throws Exception {
+	public String deleteData(Integer studentId) throws StudentNotFoundException {
 		Optional<Student> response = studentRepository.findById(studentId);
 		if (!response.isPresent()) {
-			throw new Exception("Student data not found for current Id");
+			throw new StudentNotFoundException("Student data not found for current Id");
 		}
 		studentRepository.deleteById(studentId);
 		return "Deleted succesfully";
 	}
 
 	@Override
-	public String updateStudent(Student student) throws Exception {
+	public String updateStudent(Student student) throws StudentNotFoundException {
 		Optional<Student> response = studentRepository.findById(student.getStudentId());
 		if (!response.isPresent()) {
-			throw new Exception("Student record not exists for update");
+			throw new StudentNotFoundException("Student record not exists for update");
 		}
 
 		if (student.getStudentName() != null) {
@@ -113,7 +115,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public String updateStudentName(Integer studentId, String studentName) {
-		studentRepository.updateStudentName(studentId,studentName);
+		studentRepository.updateStudentName(studentId, studentName);
 		return "updated Name succesfully";
 	}
 }

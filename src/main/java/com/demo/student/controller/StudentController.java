@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.student.entity.Student;
+import com.demo.student.exception.StudentNotFoundException;
 import com.demo.student.service.StudentService;
 
 @RestController
@@ -38,7 +39,7 @@ public class StudentController {
 	}
 
 	@GetMapping("/get/{studentId}")
-	public ResponseEntity<Student> getStudentDetails(@PathVariable("studentId") Integer studentId) throws Exception {
+	public ResponseEntity<Student> getStudentDetails(@PathVariable("studentId") Integer studentId) throws StudentNotFoundException {
 		Student response = studentService.getStudent(studentId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
@@ -75,13 +76,12 @@ public class StudentController {
 		String response = studentService.updateStudent(student);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
+
 	@PutMapping("/update/name/{studentId}/{studentName}")
 	public ResponseEntity<String> updateStudentName(@PathVariable("studentId") Integer studentId,
 			@PathVariable("studentName") String studentName) throws Exception {
 		String response = studentService.updateStudentName(studentId, studentName);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-
 
 }

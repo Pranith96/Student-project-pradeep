@@ -3,6 +3,7 @@ package com.demo.student.service;
 import java.util.List;
 
 import com.demo.student.entity.Student;
+import com.demo.student.exception.StudentNotFoundException;
 
 public interface StudentService {
 
@@ -10,7 +11,7 @@ public interface StudentService {
 
 	List<Student> getAllStudent() throws Exception;
 
-	Student getStudent(Integer studentId) throws Exception;
+	Student getStudent(Integer studentId) throws StudentNotFoundException;
 
 	List<Student> getStudentbyName(String studentName) throws Exception;
 
