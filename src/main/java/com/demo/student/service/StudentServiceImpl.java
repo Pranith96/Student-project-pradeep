@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.demo.student.entity.Student;
@@ -12,6 +13,7 @@ import com.demo.student.exception.StudentNotFoundException;
 import com.demo.student.repository.StudentRepository;
 
 @Service
+@Profile(value= {"local","dev","qa","prod"})
 public class StudentServiceImpl implements StudentService {
 
 	@Autowired
